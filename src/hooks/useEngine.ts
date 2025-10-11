@@ -7,12 +7,13 @@ import { countErrors, calculateAccuracyPercentage, calculateWPM, countWords } fr
 export type State = "start" | "run" | "finish";
 
 const WORDS_COUNT = 500; // Generate many words for infinite scrolling
-const COUNTDOWN_SECONDS = 30;
 
 const useEngine = () => {
     const [state, setState] = useState<State>("start");
+    const [selectedTime, setSelectedTime] = useState(30);
+    
     const { words, updateWords } = useWords(WORDS_COUNT);
-    const { timeLeft, startCountdown, resetCountdown } = useTimer(COUNTDOWN_SECONDS);
+    const { timeLeft, startCountdown, resetCountdown } = useTimer(selectedTime);
     const { typed, cursor, clearTyped, resetTotalTyped, totalTyped } = useTypings(state !== "finish");
     
     const [errors, setErrors] = useState(0);
@@ -29,26 +30,15 @@ const useEngine = () => {
             setState("run");
             startCountdown();
         }
-    }, [isStarting, startCountdown, cursor]);
+    }, [isStarting, startCountdown]);
 
-    const isFinishing = cursor === words.length;
-
-    // when the countdown reaches 0, sum the errors
+    // when the countdown reaches 0, finish the test
     useEffect(() => {
-        if(!timeLeft) {
+        if(timeLeft === 0 && state === "run") {
             setState("finish");
             sumErrors();
         }
-    }, [timeLeft, sumErrors]);
-
-    useEffect(() => {
-        if(isFinishing) {
-            setState("finish");
-            sumErrors();
-            updateWords();
-            clearTyped();
-        }
-    }, [cursor, words, clearTyped, typed, isFinishing, sumErrors, updateWords])
+    }, [timeLeft, state, sumErrors]);
 
     const restart = useCallback(() => {
         setState("start");
@@ -68,11 +58,40 @@ const useEngine = () => {
     }, [errors, totalWords]);
 
     const wpm = useMemo(() => {
-        const elapsedTime = COUNTDOWN_SECONDS - timeLeft;
+        const elapsedTime = selectedTime - timeLeft;
         return calculateWPM(typed, elapsedTime);
-    }, [typed, timeLeft]);
+    }, [typed, timeLeft, selectedTime]);
 
-    return { state, words, timeLeft, typed, restart, errors, accuracy, wpm, totalWords }
+    const handleTimeChange = useCallback((time: number) => {
+        setSelectedTime(time);
+        setState("start");
+        setErrors(0);
+        clearTyped();
+        resetTotalTyped();
+        resetCountdown();
+        updateWords();
+    }, [clearTyped, resetTotalTyped, resetCountdown, updateWords]);
+
+    // Update timer when selectedTime changes
+    useEffect(() => {
+        if (state === "start") {
+            resetCountdown();
+        }
+    }, [selectedTime, state, resetCountdown]);
+
+    return { 
+        state, 
+        words, 
+        timeLeft, 
+        typed, 
+        restart, 
+        errors, 
+        accuracy, 
+        wpm, 
+        totalWords,
+        selectedTime,
+        handleTimeChange
+    }
 };
 
 export default useEngine;

@@ -8,14 +8,19 @@ import useEngine from './hooks/useEngine';
 
 
 const App = () => {
-  const { state, words, timeLeft, typed, restart, errors, accuracy, wpm, totalWords } = useEngine();
+  const { state, words, timeLeft, typed, restart, errors, accuracy, wpm, totalWords, selectedTime, handleTimeChange } = useEngine();
   const containerRef = useAutoScroll(typed.length, state === "run");
   return (
     <>
       <Header />
       <div className="flex-1 flex flex-col items-center justify-center py-8">
         <div className="max-w-4xl mx-auto px-4 w-full">
-          <CountdownTimer timeLeft={timeLeft} />
+          <CountdownTimer 
+            timeLeft={timeLeft} 
+            selectedTime={selectedTime}
+            onTimeChange={handleTimeChange}
+            state={state}
+          />
           <WordsContainer containerRef={containerRef}>
             <GeneratedWords words={words} />
             <UserTyping userInput={typed} words={words} className="absolute inset-0" />
@@ -38,7 +43,7 @@ const App = () => {
   );
 }
 
-const WordsContainer = ({children, containerRef} : {children: React.ReactNode, containerRef: React.RefObject<HTMLDivElement>}) => {
+const WordsContainer = ({children, containerRef} : {children: React.ReactNode, containerRef: React.RefObject<HTMLDivElement | null>}) => {
   return (
     <div className="relative max-w-4xl mx-auto mt-3 text-3xl leading-relaxed break-all overflow-hidden h-58">
       <div ref={containerRef} className="absolute inset-0 overflow-y-auto scrollbar-hide">
@@ -52,8 +57,58 @@ const GeneratedWords = ({words} : {words: string}) => {
   return <div className=" text-slate-500">{words}</div>
 }
 
-const CountdownTimer = ({timeLeft} : {timeLeft: number}) => {
-  return <h2 className={`font-medium text-center ${timeLeft === 0 ? 'text-red-500' : 'text-yellow-400'}`}> Time: {timeLeft}</h2>
+
+const CountdownTimer = ({ 
+  timeLeft, 
+  selectedTime, 
+  onTimeChange, 
+  state 
+}: { 
+  timeLeft: number; 
+  selectedTime: number; 
+  onTimeChange: (time: number) => void; 
+  state: string;
+}) => {
+  const timeOptions = [30, 60];
+  const currentIndex = timeOptions.indexOf(selectedTime);
+
+  const handleSliderChange = (direction: 'left' | 'right') => {
+    if (direction === 'left' && currentIndex > 0) {
+      onTimeChange(timeOptions[currentIndex - 1]);
+    } else if (direction === 'right' && currentIndex < timeOptions.length - 1) {
+      onTimeChange(timeOptions[currentIndex + 1]);
+    }
+  };
+
+  if (state === "start") {
+    return (
+      <div className="flex items-center justify-center gap-4">
+        <button 
+          onClick={() => handleSliderChange('left')}
+        disabled={currentIndex === 0}
+        className="text-yellow-400 hover:text-yellow-300 disabled:opacity-30 disabled:cursor-not-allowed text-2xl font-bold"
+      >
+        ‹
+      </button>
+      <h2 className="font-medium text-lg text-yellow-400">
+        Time: {selectedTime}
+      </h2>
+      <button 
+        onClick={() => handleSliderChange('right')}
+        disabled={currentIndex === timeOptions.length - 1}
+        className="text-yellow-400 hover:text-yellow-300 disabled:opacity-30 disabled:cursor-not-allowed text-2xl font-bold"
+      >
+        ›
+      </button>
+    </div>
+  );
+}
+
+  return (
+    <h2 className={`font-medium text-center text-lg ${timeLeft === 0 ? 'text-red-500' : 'text-yellow-400'}`}>
+      Time: {Math.floor(timeLeft)}
+    </h2>
+  );
 }
 
 
