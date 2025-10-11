@@ -14,7 +14,7 @@ const useEngine = () => {
     
     const { words, updateWords } = useWords(WORDS_COUNT);
     const { timeLeft, startCountdown, resetCountdown } = useTimer(selectedTime);
-    const { typed, cursor, clearTyped, resetTotalTyped, totalTyped } = useTypings(state !== "finish");
+    const { typed, cursor, clearTyped, resetTotalTyped } = useTypings(state !== "finish");
     
     const [errors, setErrors] = useState(0);
     const sumErrors = useCallback(() => {

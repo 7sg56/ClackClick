@@ -2,7 +2,8 @@ import { generate } from 'random-words';
 import { useCallback, useState } from 'react';
 
 const generateWords = (count: number) => {
-  return generate(count).join(' ');
+  const words = generate(count);
+  return Array.isArray(words) ? words.join(' ') : words;
 };
 
 const useWords = (count: number) => {

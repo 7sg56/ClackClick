@@ -10,13 +10,13 @@ const RestartButton = ({
 }) => {
     const buttonRef = useRef<HTMLButtonElement>(null);
 
-    const handleClick = () => {
-        buttonRef.current?.blur();
-        handleRestart();
-    };
     return (
         <button
-            onClick={handleRestart}
+            ref={buttonRef}
+            onClick={() => {
+                buttonRef.current?.blur();
+                handleRestart();
+            }}
             className={`block rounded px-8 py-2 hover:bg-slate-700/50 ${className}`}
         >
             <MdRefresh className="w-6 h-6"/>

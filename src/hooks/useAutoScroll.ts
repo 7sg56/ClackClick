@@ -9,7 +9,6 @@ const useAutoScroll = (cursor: number, isActive: boolean) => {
     const container = containerRef.current;
     const lineHeight = 48; // 3xl text with leading-relaxed ≈ 48px
     const containerHeight = container.clientHeight;
-    const totalHeight = container.scrollHeight;
     
     // Calculate which line the cursor is on
     const currentLine = Math.floor(cursor / 80); // Approximate characters per line
