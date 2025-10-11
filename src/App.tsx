@@ -1,5 +1,6 @@
 import Footer from './components/Footer';
 import Header from './components/Header';
+import MobileOverlay from './components/MobileOverlay';
 import RestartButton from './components/RestartButton';
 import Results from './components/Results';
 import UserTyping from './components/UserTyping';
@@ -12,6 +13,7 @@ const App = () => {
   const containerRef = useAutoScroll(typed.length, state === "run");
   return (
     <>
+      <MobileOverlay />
       <Header />
       <div className="flex-1 flex flex-col items-center justify-center py-8">
         <div className="max-w-4xl mx-auto px-4 w-full">
