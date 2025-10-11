@@ -6,7 +6,7 @@ import { countErrors, calculateAccuracyPercentage, calculateWPM, countWords } fr
 
 export type State = "start" | "run" | "finish";
 
-const WORDS_COUNT = 30;
+const WORDS_COUNT = 500; // Generate many words for infinite scrolling
 const COUNTDOWN_SECONDS = 30;
 
 const useEngine = () => {
