@@ -2,9 +2,9 @@ import {motion} from "framer-motion";
 
 const Cursor = () => {
     return (
-        <motion.div
+        <motion.span
             aria-hidden="true"
-            className="inline-block w-0.75 h-7 bg-yellow-400 ml-1"
+            className="inline-block w-0.5 h-6 bg-yellow-400 ml-0.5 align-middle"
             initial={{opacity: 1}}
             animate={{opacity: 0}}
             exit={{opacity: 1}}

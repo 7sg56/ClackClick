@@ -7,22 +7,22 @@ import useEngine from './hooks/useEngine';
 const words = generate(10).join(' ');
 
 const App = () => {
-  const { state, words } = useEngine();
+  const { state, words, timeLeft, typed, restart, errors, accuracy, wpm, totalWords } = useEngine();
   return (
     <>
-      <CountdownTimer timeLeft={10} />
+      <CountdownTimer timeLeft={timeLeft} />
       <WordsContainer>
         <GeneratedWords words={words} />
-        <UserTyping userInput={words} className="absolute inset-0" />
+        <UserTyping userInput={typed} words={words} className="absolute inset-0" />
       </WordsContainer>
       <RestartButton 
-        onRestart={() => {}} 
+        onRestart={restart} 
         className="text-slate-500 mx-auto mt-10"/>
       <Results
-        errors={0}
-        accuracy={100}
-        wpm={0}
-        total={0}
+        errors={errors}
+        accuracy={accuracy}
+        wpm={wpm}
+        total={totalWords}
         className="text-slate-500 mx-auto mt-10"/>
     </>
   );
