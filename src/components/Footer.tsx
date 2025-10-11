@@ -29,7 +29,7 @@ const Footer = () => {
       <div className="flex flex-col items-end">
         <p className={`text-sm ${theme === 'light' ? 'text-slate-700' : 'text-slate-400'}`}>
           <span className={theme === 'light' ? 'text-yellow-500' : 'text-yellow-400'}>2025</span>{' '}
-          <span className={theme === 'light' ? 'text-red-500' : 'text-red-500'}>ClickClack</span>
+          <span className={theme === 'light' ? 'text-red-500' : 'text-red-500'}>ClackClick</span>
         </p>
       </div>
       

@@ -18,7 +18,7 @@ const Header = () => {
       <div className="flex items-center gap-4">
         <ThemeSwitcher />
         <a 
-          href="https://github.com/7sg56/clickclack" 
+          href="https://github.com/7sg56/clackclick" 
           target="_blank" 
           rel="noopener noreferrer"
           className={`transition-colors ${
