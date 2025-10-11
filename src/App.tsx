@@ -6,6 +6,7 @@ import Results from './components/Results';
 import UserTyping from './components/UserTyping';
 import useAutoScroll from './hooks/useAutoScroll';
 import useEngine from './hooks/useEngine';
+import { useTheme } from './contexts/ThemeContext';
 
 
 const App = () => {
@@ -47,7 +48,7 @@ const App = () => {
 
 const WordsContainer = ({children, containerRef} : {children: React.ReactNode, containerRef: React.RefObject<HTMLDivElement | null>}) => {
   return (
-    <div className="relative max-w-4xl mx-auto mt-3 text-3xl leading-relaxed break-all overflow-hidden h-58">
+    <div className="relative max-w-4xl mx-auto mt-3 text-3xl leading-relaxed break-all overflow-hidden h-80">
       <div ref={containerRef} className="absolute inset-0 overflow-y-auto scrollbar-hide">
         {children}
       </div>
@@ -71,6 +72,7 @@ const CountdownTimer = ({
   onTimeChange: (time: number) => void; 
   state: string;
 }) => {
+  const { theme } = useTheme();
   const timeOptions = [30, 60];
   const currentIndex = timeOptions.indexOf(selectedTime);
 
@@ -88,17 +90,27 @@ const CountdownTimer = ({
         <button 
           onClick={() => handleSliderChange('left')}
         disabled={currentIndex === 0}
-        className="text-yellow-400 hover:text-yellow-300 disabled:opacity-30 disabled:cursor-not-allowed text-2xl font-bold"
+        className={`disabled:opacity-30 disabled:cursor-not-allowed text-2xl font-bold ${
+          theme === 'light' 
+            ? 'text-yellow-500 hover:text-yellow-400' 
+            : 'text-yellow-400 hover:text-yellow-300'
+        }`}
       >
         ‹
       </button>
-      <h2 className="font-medium text-lg text-yellow-400">
+      <h2 className={`font-medium text-lg ${
+        theme === 'light' ? 'text-yellow-500' : 'text-yellow-400'
+      }`}>
         Time: {selectedTime}
       </h2>
       <button 
         onClick={() => handleSliderChange('right')}
         disabled={currentIndex === timeOptions.length - 1}
-        className="text-yellow-400 hover:text-yellow-300 disabled:opacity-30 disabled:cursor-not-allowed text-2xl font-bold"
+        className={`disabled:opacity-30 disabled:cursor-not-allowed text-2xl font-bold ${
+          theme === 'light' 
+            ? 'text-yellow-500 hover:text-yellow-400' 
+            : 'text-yellow-400 hover:text-yellow-300'
+        }`}
       >
         ›
       </button>
@@ -107,7 +119,11 @@ const CountdownTimer = ({
 }
 
   return (
-    <h2 className={`font-medium text-center text-lg ${timeLeft === 0 ? 'text-red-500' : 'text-yellow-400'}`}>
+    <h2 className={`font-medium text-center text-lg ${
+      timeLeft === 0 
+        ? (theme === 'light' ? 'text-red-500' : 'text-red-500')
+        : (theme === 'light' ? 'text-yellow-500' : 'text-yellow-400')
+    }`}>
       Time: {Math.floor(timeLeft)}
     </h2>
   );

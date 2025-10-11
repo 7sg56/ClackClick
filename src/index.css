@@ -2,8 +2,25 @@
 
 @layer base {
   body {
-    @apply min-h-screen bg-slate-800 font-mono tracking-wider;
+    @apply min-h-screen font-mono tracking-wider;
   }
+  
+        /* Force theme styles */
+        html.dark {
+          background-color: #0f172a;
+        }
+        
+        html.dark body {
+          background-color: #0f172a;
+        }
+        
+        html.light {
+          background-color: #f1f5f9;
+        }
+        
+        html.light body {
+          background-color: #f1f5f9;
+        }
 }
 
 @layer utilities {

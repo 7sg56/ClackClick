@@ -17,16 +17,11 @@ const useAutoScroll = (cursor: number, isActive: boolean) => {
     // Calculate scroll position to keep cursor in the middle of visible area
     const targetScrollTop = Math.max(0, (currentLine - Math.floor(linesVisible / 2)) * lineHeight);
     
-    // Only scroll if we need to move the view
-    const currentScrollTop = container.scrollTop;
-    const scrollThreshold = lineHeight; // Only scroll if we need to move more than one line
-    
-    if (Math.abs(targetScrollTop - currentScrollTop) > scrollThreshold) {
-      container.scrollTo({
-        top: targetScrollTop,
-        behavior: 'smooth'
-      });
-    }
+    // Always scroll to target position
+    container.scrollTo({
+      top: targetScrollTop,
+      behavior: 'smooth'
+    });
   }, [cursor, isActive]);
 
   return containerRef;
