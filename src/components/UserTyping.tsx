@@ -1,4 +1,5 @@
 import Cursor from "./Cursor";
+import { useTheme } from "../contexts/ThemeContext";
 
 const Character = ({
     actual, 
@@ -7,6 +8,7 @@ const Character = ({
     actual: string;
     expected: string;
 }) => {
+    const { theme } = useTheme();
     const isCorrect = actual === expected;
     const isWhitespace = expected === " ";
        
@@ -14,7 +16,7 @@ const Character = ({
         <span
             className={`${
                 !isCorrect && !isWhitespace ? "text-red-500" :
-                isCorrect && !isWhitespace ? "text-yellow-400" :
+                isCorrect && !isWhitespace ? (theme === 'light' ? "text-yellow-500" : "text-yellow-400") :
                 !isCorrect && isWhitespace ? "bg-red-500/50" : ""
             }`}
         >

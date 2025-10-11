@@ -18,8 +18,10 @@ const useEngine = () => {
     
     const [errors, setErrors] = useState(0);
     const sumErrors = useCallback(() => {
-        const wordsReached = words.substring(0, cursor);
-        setErrors((prev) => prev + countErrors(typed, wordsReached));
+        // Calculate total errors by comparing typed text with expected text
+        const expectedText = words.substring(0, cursor);
+        const totalErrors = countErrors(typed, expectedText);
+        setErrors(totalErrors);
     }, [typed, cursor, words]);
 
     const isStarting = state === "start" && cursor > 0;
