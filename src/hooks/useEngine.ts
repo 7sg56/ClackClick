@@ -84,6 +84,7 @@ const useEngine = () => {
         words, 
         timeLeft, 
         typed, 
+        cursor,
         restart, 
         errors, 
         accuracy, 

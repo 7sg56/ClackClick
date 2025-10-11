@@ -11,9 +11,11 @@ const isKeyboardCode = (code: string) => {
 
 
 const useTypings = (enabled: boolean) => {
-    const [cursor, setCursor] = useState<number>(0);
     const [typed, setTyped] = useState<string>("");
     const totalTyped = useRef(0);
+    
+    // Calculate cursor position from typed text length
+    const cursor = typed.length;
     
     const keydownHandler = useCallback(
         ({key, code}: KeyboardEvent) => {
@@ -22,20 +24,17 @@ const useTypings = (enabled: boolean) => {
             switch (key) {
                 case "Backspace":
                     setTyped((prev) => prev.slice(0, -1));
-                    setCursor(cursor - 1);
                     totalTyped.current -= 1;
                     break;
                 default: 
                     setTyped((prev) => prev + key);
-                    setCursor(cursor + 1);
                     totalTyped.current += 1;
                     break;
             }
-        }, [cursor, enabled]);
+        }, [enabled]);
 
     const clearTyped = useCallback(() => {
         setTyped("");
-        setCursor(0);
     }, []);
 
     const resetTotalTyped = useCallback(() => {

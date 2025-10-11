@@ -10,8 +10,8 @@ import { useTheme } from './contexts/ThemeContext';
 
 
 const App = () => {
-  const { state, words, timeLeft, typed, restart, errors, accuracy, wpm, totalWords, selectedTime, handleTimeChange } = useEngine();
-  const containerRef = useAutoScroll(typed.length, state === "run");
+  const { state, words, timeLeft, typed, cursor, restart, errors, accuracy, wpm, totalWords, selectedTime, handleTimeChange } = useEngine();
+  const containerRef = useAutoScroll(cursor, state === "run");
   return (
     <>
       <MobileOverlay />
@@ -48,7 +48,7 @@ const App = () => {
 
 const WordsContainer = ({children, containerRef} : {children: React.ReactNode, containerRef: React.RefObject<HTMLDivElement | null>}) => {
   return (
-    <div className="relative max-w-4xl mx-auto mt-3 text-3xl leading-relaxed break-all overflow-hidden h-80">
+    <div className="relative max-w-4xl mx-auto mt-3 text-3xl leading-relaxed break-all overflow-hidden h-48">
       <div ref={containerRef} className="absolute inset-0 overflow-y-auto scrollbar-hide">
         {children}
       </div>
