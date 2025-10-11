@@ -10,8 +10,8 @@ const Header = () => {
     }`}>
       <div className="flex flex-col">
         <h1 className="text-4xl font-bold mb-2">
-          <span className={theme === 'light' ? 'text-yellow-500' : 'text-yellow-400'}>Click</span>
-          <span className={theme === 'light' ? 'text-red-500' : 'text-red-500'}>Clack</span>
+          <span className={theme === 'light' ? 'text-yellow-500' : 'text-yellow-400'}>Clack</span>
+          <span className={theme === 'light' ? 'text-red-500' : 'text-red-500'}>Click</span>
         </h1>
         <p className={`text-sm ${theme === 'light' ? 'text-slate-700' : 'text-slate-400'}`}>Test your typing speed</p>
       </div>
