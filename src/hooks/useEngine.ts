@@ -14,7 +14,7 @@ const useEngine = () => {
     
     const { words, updateWords } = useWords(WORDS_COUNT);
     const { timeLeft, startCountdown, resetCountdown } = useTimer(selectedTime);
-    const { typed, cursor, clearTyped, resetTotalTyped } = useTypings(state !== "finish");
+    const { typed, cursor, clearTyped } = useTypings(state !== "finish");
     
     const [errors, setErrors] = useState(0);
     const sumErrors = useCallback(() => {
@@ -29,6 +29,7 @@ const useEngine = () => {
     // when the user starts typing, start the countdown
     useEffect(() => {
         if(isStarting) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setState("run");
             startCountdown();
         }
@@ -37,6 +38,7 @@ const useEngine = () => {
     // when the countdown reaches 0, finish the test
     useEffect(() => {
         if(timeLeft === 0 && state === "run") {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setState("finish");
             sumErrors();
         }
@@ -46,10 +48,9 @@ const useEngine = () => {
         setState("start");
         setErrors(0);
         clearTyped();
-        resetTotalTyped();
         resetCountdown();
         updateWords();
-    }, [resetTotalTyped, resetCountdown, updateWords, clearTyped])
+    }, [resetCountdown, updateWords, clearTyped])
 
     const totalWords = useMemo(() => {
         return countWords(typed);
@@ -69,10 +70,9 @@ const useEngine = () => {
         setState("start");
         setErrors(0);
         clearTyped();
-        resetTotalTyped();
         resetCountdown();
         updateWords();
-    }, [clearTyped, resetTotalTyped, resetCountdown, updateWords]);
+    }, [clearTyped, resetCountdown, updateWords]);
 
     // Update timer when selectedTime changes
     useEffect(() => {
