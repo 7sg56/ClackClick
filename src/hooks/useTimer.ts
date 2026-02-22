@@ -5,14 +5,12 @@ const useTimer = (seconds: number) => {
   const intervalRef = useRef<number | null>(null);
 
   const startCountdown = useCallback(() => {
-    console.log("starting countdown...");
     intervalRef.current = setInterval(() => {
       setTimeLeft((timeLeft) => timeLeft - 1);
     }, 1000);
   }, [setTimeLeft]);
 
   const resetCountdown = useCallback(() => {
-    console.log("resetting countdown...");
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
@@ -22,7 +20,6 @@ const useTimer = (seconds: number) => {
   // when the countdown reaches 0, clear the countdown interval
   useEffect(() => {
     if (!timeLeft && intervalRef.current) {
-      console.log("clearing timer...");
       clearInterval(intervalRef.current);
     }
   }, [timeLeft, intervalRef]);
