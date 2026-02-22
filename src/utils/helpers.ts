@@ -21,17 +21,15 @@ export const calculateAccuracyPercentage = (errors: number, total: number) => {
   return 0;
 };
 
-export const calculateWPM = (typedText: string, timeInSeconds: number) => {
-  if (timeInSeconds === 0) return 0;
-  
-  // Count actual words by splitting on whitespace
-  const wordsTyped = typedText.trim().split(/\s+/).filter(word => word.length > 0).length;
-  const timeInMinutes = timeInSeconds / 60;
-  
-  return Math.round(wordsTyped / timeInMinutes);
-};
-
 export const countWords = (text: string) => {
   return text.trim().split(/\s+/).filter(word => word.length > 0).length;
 };
 
+export const calculateWPM = (typedText: string, timeInSeconds: number) => {
+  if (timeInSeconds === 0) return 0;
+  
+  const wordsTyped = countWords(typedText);
+  const timeInMinutes = timeInSeconds / 60;
+  
+  return Math.round(wordsTyped / timeInMinutes);
+};
