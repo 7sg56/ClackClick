@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const isKeyboardCode = (code: string) => {
     return (
@@ -12,7 +12,6 @@ const isKeyboardCode = (code: string) => {
 
 const useTypings = (enabled: boolean) => {
     const [typed, setTyped] = useState<string>("");
-    const totalTyped = useRef(0);
     
     // Calculate cursor position from typed text length
     const cursor = typed.length;
@@ -24,21 +23,15 @@ const useTypings = (enabled: boolean) => {
             switch (key) {
                 case "Backspace":
                     setTyped((prev) => prev.slice(0, -1));
-                    totalTyped.current -= 1;
                     break;
                 default: 
                     setTyped((prev) => prev + key);
-                    totalTyped.current += 1;
                     break;
             }
         }, [enabled]);
 
     const clearTyped = useCallback(() => {
         setTyped("");
-    }, []);
-
-    const resetTotalTyped = useCallback(() => {
-        totalTyped.current = 0;
     }, []);
 
     // attach the keydown event listener to record keystrokes
@@ -54,8 +47,6 @@ const useTypings = (enabled: boolean) => {
         typed, 
         cursor, 
         clearTyped,
-        resetTotalTyped,
-        totalTyped: totalTyped.current,
     };
 }
 
