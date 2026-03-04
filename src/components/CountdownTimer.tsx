@@ -60,7 +60,7 @@ const CountdownTimer = ({
   return (
     <h2 className={`font-medium text-center text-lg ${
       timeLeft === 0
-        ? (theme === 'light' ? 'text-red-500' : 'text-red-500')
+        ? 'text-red-500'
         : (theme === 'light' ? 'text-yellow-500' : 'text-yellow-400')
     }`}>
       Time: {Math.floor(timeLeft)}

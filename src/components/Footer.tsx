@@ -4,10 +4,10 @@ const Footer = () => {
   const { theme } = useTheme();
 
   return (
-    <footer className={`fixed bottom-0 left-0 right-0 w-[75vw] mx-auto flex items-center justify-between py-4 border-t ${
+    <footer className={`fixed bottom-0 left-0 right-0 w-[75vw] mx-auto flex items-center justify-between py-4 border-t bg-transparent ${
       theme === 'light' 
-        ? 'border-slate-300 bg-transparent' 
-        : 'border-slate-600 bg-transparent'
+        ? 'border-slate-300'
+        : 'border-slate-600'
     }`}>
       <div className="flex flex-col">
         <p className={`text-sm ${theme === 'light' ? 'text-slate-700' : 'text-slate-400'}`}>
@@ -29,7 +29,7 @@ const Footer = () => {
       <div className="flex flex-col items-end">
         <p className={`text-sm ${theme === 'light' ? 'text-slate-700' : 'text-slate-400'}`}>
           <span className={theme === 'light' ? 'text-yellow-500' : 'text-yellow-400'}>2025</span>{' '}
-          <span className={theme === 'light' ? 'text-red-500' : 'text-red-500'}>ClackClick</span>
+          <span className="text-red-500">ClackClick</span>
         </p>
       </div>
       
