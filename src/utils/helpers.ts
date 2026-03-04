@@ -22,7 +22,36 @@ export const calculateAccuracyPercentage = (errors: number, total: number) => {
 };
 
 export const countWords = (text: string) => {
-  return text.trim().split(/\s+/).filter(word => word.length > 0).length;
+  let count = 0;
+  let inWord = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const charCode = text.charCodeAt(i);
+    // Fast check for common whitespace: space (32), tab (9), newline (10), carriage return (13)
+    if (
+      charCode === 32 ||
+      charCode === 9 ||
+      charCode === 10 ||
+      charCode === 13 ||
+      (charCode >= 11 && charCode <= 12) || // vertical tab (11), form feed (12)
+      charCode === 160 || // non-breaking space
+      (charCode >= 0x2000 && charCode <= 0x200b) || // various unicode spaces
+      charCode === 0x3000 // ideographic space
+    ) {
+      if (inWord) {
+        count++;
+        inWord = false;
+      }
+    } else {
+      inWord = true;
+    }
+  }
+
+  if (inWord) {
+    count++;
+  }
+
+  return count;
 };
 
 export const calculateWPM = (typedText: string, timeInSeconds: number) => {
