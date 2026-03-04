@@ -1,7 +1,8 @@
+import React from "react";
 import Cursor from "./Cursor";
 import { useTheme } from "../contexts/ThemeContext";
 
-const Character = ({
+const Character = React.memo(({
     actual, 
     expected
 }: {
@@ -23,7 +24,9 @@ const Character = ({
             {expected}
         </span>
     );
-};
+});
+
+Character.displayName = "Character";
 
 const UserTyping = ({
   userInput,
